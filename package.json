@@ -1,0 +1,31 @@
+{
+  "name": "axios-handler",
+  "version": "1.0.0",
+  "description": "This hook works with the axios library, making queries much easier and more convenient.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yeldos Turapbayev",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ekosh02/axios-handler"
+  },
+  "keywords": [
+    "axios-handler",
+    "axios",
+    "useFetching",
+    "fetch",
+    "use",
+    "hook",
+    "hooks"
+  ],
+  "devDependencies": {
+    "react": "^18.2.0",
+    "typescript": "^5.4.3"
+  },
+  "dependencies": {
+    "axios": "^1.6.8"
+  }
+}
