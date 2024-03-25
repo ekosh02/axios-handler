@@ -85,4 +85,4 @@ Please make sure to update tests as appropriate.
 
 ## License
 
-<!-- [ISC]() -->
+[ISC](https://github.com/ekosh02/axios-handler/blob/main/LICENSE)
