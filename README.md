@@ -41,7 +41,7 @@ Import useFetching:
 ```typescript
 import {useFetching} from 'axios-handler';
 import {FC, useEffect} from 'react';
-import {FetchController} from '../api/controllers/UpdateVersionController';
+import {FetchController} from '../controllers/FetchController';
 
 const Component: FC = () => {
   const {fetch, data, loading, error} = useFetching({
