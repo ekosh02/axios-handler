@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { useState } from "react";
 
 type useFetchingTypes<T, D> = {
-  query?: (arg: any) => Promise<AxiosResponse<T, D>>;
+  query: (arg: any) => Promise<AxiosResponse<T, D>>;
   onComplete?: (response: AxiosResponse<T, D>) => undefined;
   onError?: (error: AxiosError<any>) => undefined;
   initialLoading?: boolean;
