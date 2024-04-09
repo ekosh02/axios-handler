@@ -19,7 +19,9 @@
     "fetch",
     "use",
     "hook",
-    "hooks"
+    "hooks",
+    "React",
+    "React Native"
   ],
   "devDependencies": {
     "react": "^18.2.0",
