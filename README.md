@@ -1,6 +1,6 @@
 # axios-handler
 
-axios-handler is a hook that makes it easier and more convenient to work with axios library when executing queries.
+axios-handler is a React/React Native hook that makes it easier and more convenient to work with axios library when executing queries.
 
 ## Installation
 
