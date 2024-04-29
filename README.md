@@ -18,34 +18,17 @@ yarn add axios-handler axios
 
 ## Usage
 
-Create controller:
-
-```typescript
-import axios, {AxiosResponse} from 'axios';
-
-type YourType = {
-  a: string;
-  b: string;
-};
-
-class FetchController {
-  static getData = async (): Promise<AxiosResponse<YourType>> => {
-    return await axios.get('API');
-  };
-}
-
-export {FetchController};
-```
 Import useFetching:
 
 ```typescript
 import {useFetching} from 'axios-handler';
 import {FC, useEffect} from 'react';
 import {FetchController} from '../controllers/FetchController';
+import axios from 'axios'
 
 const Component: FC = () => {
   const {fetch, data, loading, error} = useFetching({
-    query: () => FetchController.getData(),
+    query: async () => await axios.get('YourApi'),
     onComplete: response => {
       console.log('response', response);
     },
@@ -70,7 +53,7 @@ export default Component;
 * data: to receive data
 * loading: request loading state
 * error: error occurred during the request
-* query: function or method returning an axios request
+* query: axios query return
 * onComplete: executed after a successful request and returns the result
 * onError: executed in case of a request error and returns the result
 * initialLoading: initial loading state value
