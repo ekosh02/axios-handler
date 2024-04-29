@@ -1,6 +1,6 @@
 {
   "name": "axios-handler",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "This hook works with the axios library, making queries much easier and more convenient.",
   "main": "index.ts",
   "scripts": {
