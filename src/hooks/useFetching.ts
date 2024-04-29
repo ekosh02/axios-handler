@@ -1,21 +1,21 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { useState } from "react";
 
-type useFetchingTypes<T, D> = {
+type useFetchingTypes<T, D, E> = {
   query: (arg: any) => Promise<AxiosResponse<T, D>>;
   onComplete?: (response: AxiosResponse<T, D>) => undefined;
-  onError?: (error: AxiosError<any>) => undefined;
+  onError?: (error: AxiosError<E>) => undefined;
   initialLoading?: boolean;
 };
 
-export const useFetching = <T = any, D = any>({
+export const useFetching = <T = any, D = any, E = any>({
   query,
   onComplete,
   onError,
   initialLoading = false,
-}: useFetchingTypes<T, D>) => {
+}: useFetchingTypes<T, D, E>) => {
   const [data, setData] = useState<AxiosResponse<T, D> | null>(null);
-  const [error, setError] = useState<AxiosError<any> | null>(null);
+  const [error, setError] = useState<AxiosError<E> | null>(null);
   const [loading, setLoading] = useState(initialLoading);
 
   const fetch = async (props: any = null) => {
