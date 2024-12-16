@@ -23,13 +23,11 @@
     "React",
     "React Native"
   ],
-  "peerDependency": {
-    "react": "*"
+  "peerDependencies": {
+    "axios": "^1.7.9",
+    "react": ">=18.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.4.3"
-  },
-  "dependencies": {
-    "axios": "^1.7.9"
+    "typescript": "^5.7.2"
   }
 }
