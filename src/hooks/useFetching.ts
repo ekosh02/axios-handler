@@ -18,7 +18,8 @@ import { FetchingParams } from "./types";
  * @returns {AxiosResponse<T, D> | null} data - Server response.
  * @returns {AxiosError<E> | null} error - Error object if the request fails.
  * @returns {boolean} loading - Indicates if the request is in progress.
- **/
+ * @returns {Function} reset - Function to reset the state (data, error, loading) to initial values.
+ */
 
 export const useFetching = <T = any, D = any, E = any>({
   query,
@@ -31,6 +32,12 @@ export const useFetching = <T = any, D = any, E = any>({
   const [data, setData] = useState<AxiosResponse<T, D> | null>(null);
   const [error, setError] = useState<AxiosError<E> | null>(null);
   const [loading, setLoading] = useState(initialLoading);
+
+  const reset = () => {
+    setData(null);
+    setError(null);
+    setLoading(false);
+  };
 
   const fetch = async (props?: any) => {
     setLoading(true);
@@ -48,5 +55,5 @@ export const useFetching = <T = any, D = any, E = any>({
     }
   };
 
-  return { fetch, data, loading, error };
+  return { fetch, data, loading, error, reset };
 };
