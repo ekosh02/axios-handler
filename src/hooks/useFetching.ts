@@ -2,6 +2,24 @@ import { useState } from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { FetchingParams } from "./types";
 
+/**
+ * useFetching - Custom React hook for Axios HTTP requests.
+ *
+ * @param {Function} query - Function to perform an HTTP request using Axios.
+ * @param {Function} [onComplete] - Callback triggered on successful completion.
+ * @param {Function} [onError] - Callback triggered when an error occurs.
+ * @param {boolean} [initialLoading=false] - Initial loading state.
+ *
+ * @template T - Response data type.
+ * @template D - Request payload type.
+ * @template E - Error response type.
+ *
+ * @returns {Function} fetch - Function to trigger the HTTP request.
+ * @returns {AxiosResponse<T, D> | null} data - Server response.
+ * @returns {AxiosError<E> | null} error - Error object if the request fails.
+ * @returns {boolean} loading - Indicates if the request is in progress.
+ **/
+
 export const useFetching = <T = any, D = any, E = any>({
   query,
   onComplete,
