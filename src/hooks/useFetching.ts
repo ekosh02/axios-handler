@@ -8,6 +8,8 @@ export const useFetching = <T = any, D = any, E = any>({
   onError,
   initialLoading = false,
 }: FetchingParams<T, D, E>) => {
+  if (!query) throw new Error("query function is required!");
+
   const [data, setData] = useState<AxiosResponse<T, D> | null>(null);
   const [error, setError] = useState<AxiosError<E> | null>(null);
   const [loading, setLoading] = useState(initialLoading);
