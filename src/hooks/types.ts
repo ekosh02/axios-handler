@@ -5,4 +5,5 @@ export type FetchingParams<T, D, E> = {
   onComplete?: (response: AxiosResponse<T, D>) => void;
   onError?: (error: AxiosError<E>) => void;
   initialLoading?: boolean;
+  initialRefreshing?: boolean;
 };
