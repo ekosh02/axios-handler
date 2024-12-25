@@ -1,25 +1,6 @@
 import { useState } from "react";
 import { AxiosError, AxiosResponse } from "axios";
-import { FetchingParams } from "./types";
-
-/**
- * useFetching - Custom React hook for Axios HTTP requests.
- *
- * @param {Function} query - Function to perform an HTTP request using Axios.
- * @param {Function} [onComplete] - Callback triggered on successful completion.
- * @param {Function} [onError] - Callback triggered when an error occurs.
- * @param {boolean} [initialLoading=false] - Initial loading state.
- *
- * @template T - Response data type.
- * @template D - Request payload type.
- * @template E - Error response type.
- *
- * @returns {Function} fetch - Function to trigger the HTTP request.
- * @returns {AxiosResponse<T, D> | null} data - Server response.
- * @returns {AxiosError<E> | null} error - Error object if the request fails.
- * @returns {boolean} loading - Indicates if the request is in progress.
- * @returns {Function} reset - Function to reset the state (data, error, loading) to initial values.
- */
+import { FetchingParams, FetchingReturn } from "./types";
 
 export const useFetching = <T = any, D = any, E = any>({
   query,
@@ -27,7 +8,7 @@ export const useFetching = <T = any, D = any, E = any>({
   onError,
   initialLoading = false,
   initialRefreshing = false,
-}: FetchingParams<T, D, E>) => {
+}: FetchingParams<T, D, E>): FetchingReturn<T, D, E> => {
   if (!query) throw new Error("query function is required!");
 
   const [data, setData] = useState<AxiosResponse<T, D> | null>(null);
@@ -74,5 +55,5 @@ export const useFetching = <T = any, D = any, E = any>({
     }
   };
 
-  return { fetch, refresh, data, loading, refreshing, error, reset };
+  return { fetch, refresh, reset, data, loading, refreshing, error };
 };
