@@ -4,7 +4,8 @@
   "description": "This hook works with the axios library, making queries much easier and more convenient.",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write ."
   },
   "author": "Yeldos Turapbayev",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "react": ">=18.0.0"
   },
   "devDependencies": {
+    "prettier": "^3.4.2",
     "typescript": "^5.7.2"
   }
 }

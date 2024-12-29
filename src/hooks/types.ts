@@ -1,9 +1,9 @@
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from 'axios'
 
 /**
  * Type for the state of the request, indicating whether it is in a loading or refreshing state.
  */
-export type RequestState = "loading" | "refreshing";
+export type RequestState = 'loading' | 'refreshing'
 
 /**
  * Parameters for configuring the `useFetching` hook.
@@ -23,30 +23,30 @@ export type FetchingParams<T, D, E> = {
    *   return await axios.get(`api/v2/example/${id}`, { params: filters });
    * };
    */
-  query: (props?: any) => Promise<AxiosResponse<T, D>>;
+  query: (props?: any) => Promise<AxiosResponse<T, D>>
 
   /**
    * Callback on successful request completion.
    */
-  onComplete?: (response: AxiosResponse<T, D>) => void;
+  onComplete?: (response: AxiosResponse<T, D>) => void
 
   /**
    * Callback on request failure.
    */
-  onError?: (error: AxiosError<E>) => void;
+  onError?: (error: AxiosError<E>) => void
 
   /**
    * Whether the request starts in a loading state.
    * @default false
    */
-  initialLoading?: boolean;
+  initialLoading?: boolean
 
   /**
    * Whether the request starts in a refreshing state.
    * @default false
    */
-  initialRefreshing?: boolean;
-};
+  initialRefreshing?: boolean
+}
 
 /**
  * Return type of the `useFetching` hook.
@@ -60,46 +60,46 @@ export type FetchingReturn<T, D, E> = {
    * Starts the HTTP request.
    *
    * @param {any} [props] - Parameters for the request.
-   * 
+   *
    * @example
    * fetch({ id: 123, filters: { test: "test" } });
    */
-  fetch: (props?: any) => Promise<void>;
+  fetch: (props?: any) => Promise<void>
 
   /**
    * Re-triggers the request in a refreshing state.
    *
    * @param {any} [props] - Parameters for the request.
-   * 
+   *
    * @example
    * refresh({ id: 123, filters: { test: "test" } });
    */
-  refresh: (props?: any) => Promise<void>;
+  refresh: (props?: any) => Promise<void>
 
   /**
    * The response data or `null` if no request has been made.
    */
-  data: AxiosResponse<T, D> | null;
+  data: AxiosResponse<T, D> | null
 
   /**
    * Whether the request is loading.
    */
-  loading: boolean;
+  loading: boolean
 
   /**
    * Whether the request is refreshing.
    */
-  refreshing: boolean;
+  refreshing: boolean
 
   /**
    * The error object if the request fails.
    */
-  error: AxiosError<E> | null;
+  error: AxiosError<E> | null
 
   /**
    * Resets the state to its initial values.
    * @example
    * reset();
    */
-  reset: () => void;
-};
+  reset: () => void
+}
