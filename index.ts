@@ -1,1 +1,1 @@
-export * from "./src/hooks/useFetching";
+export * from './src/hooks/useFetching'
