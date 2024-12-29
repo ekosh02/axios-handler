@@ -1,6 +1,11 @@
 import { AxiosError, AxiosResponse } from "axios";
 
 /**
+ * Type for the state of the request, indicating whether it is in a loading or refreshing state.
+ */
+export type RequestState = "loading" | "refreshing";
+
+/**
  * Parameters for configuring the `useFetching` hook.
  *
  * @template T - Type of the expected response data.

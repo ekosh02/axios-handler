@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AxiosError, AxiosResponse } from "axios";
-import { FetchingParams, FetchingReturn } from "./types";
+import { FetchingParams, FetchingReturn, RequestState } from "./types";
 
 export const useFetching = <T = any, D = any, E = any>({
   query,
@@ -23,8 +23,12 @@ export const useFetching = <T = any, D = any, E = any>({
     setRefreshing(false);
   };
 
-  const refresh = async (props?: any) => {
-    setRefreshing(true);
+  const handleRequest = async (
+    props?: any,
+    requestState: RequestState = "loading"
+  ) => {
+    if (requestState === "loading") setLoading(true);
+    if (requestState === "refreshing") setRefreshing(true);
     setError(null);
     try {
       const response = await query(props);
@@ -35,25 +39,14 @@ export const useFetching = <T = any, D = any, E = any>({
       setError(axiosError);
       onError?.(axiosError);
     } finally {
-      setRefreshing(false);
+      if (requestState === "loading") setLoading(false);
+      if (requestState === "refreshing") setRefreshing(false);
     }
   };
 
-  const fetch = async (props?: any) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await query(props);
-      setData(response);
-      onComplete?.(response);
-    } catch (error) {
-      const axiosError = error as AxiosError<E>;
-      setError(axiosError);
-      onError?.(axiosError);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const refresh = (props?: any) => handleRequest(props, "refreshing");
+
+  const fetch = (props?: any) => handleRequest(props, "loading");
 
   return { fetch, refresh, reset, data, loading, refreshing, error };
 };
