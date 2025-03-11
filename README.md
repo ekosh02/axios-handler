@@ -39,14 +39,14 @@ import axios from 'axios'
 
 const Component = () => {
   const { fetch, refresh, data, loading, refreshing, error, reset } = useFetching({
-    query: async props => {
+    query: async (props) => {
       const { id, filters } = props
       return await axios.get(`api/v2/example/${id}`, { params: filters })
     },
-    onComplete: response => {
+    onComplete: (response) => {
       console.log('Response:', response)
     },
-    onError: error => {
+    onError: (error) => {
       console.log('Error:', error)
     },
     initialLoading: true,
@@ -113,26 +113,26 @@ Here are the type definitions used for the hook:
 
 ```typescript
 export type FetchingParams<T, D, E> = {
-  query: (props?: any) => Promise<AxiosResponse<T, D>>;
-  onComplete?: (response: AxiosResponse<T, D>) => void;
-  onError?: (error: AxiosError<E>) => void;
-  initialLoading?: boolean;
-  initialRefreshing?: boolean;
-};
+  query: (props?: any) => Promise<AxiosResponse<T, D>>
+  onComplete?: (response: AxiosResponse<T, D>) => void
+  onError?: (error: AxiosError<E>) => void
+  initialLoading?: boolean
+  initialRefreshing?: boolean
+}
 ```
 
 #### Return Values
 
 ```typescript
 export type FetchingReturn<T, D, E> = {
-  fetch: (props?: any) => Promise<void>;
-  refresh: (props?: any) => Promise<void>;
-  data: AxiosResponse<T, D> | null;
-  loading: boolean;
-  refreshing: boolean;
-  error: AxiosError<E> | null;
-  reset: () => void;
-};
+  fetch: (props?: any) => Promise<void>
+  refresh: (props?: any) => Promise<void>
+  data: AxiosResponse<T, D> | null
+  loading: boolean
+  refreshing: boolean
+  error: AxiosError<E> | null
+  reset: () => void
+}
 ```
 
 ---
