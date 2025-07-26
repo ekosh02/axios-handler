@@ -6,6 +6,12 @@ import { AxiosError, AxiosResponse } from 'axios'
 export type RequestState = 'loading' | 'refreshing'
 
 /**
+ * Fetch lifecycle state
+ */
+
+export type FetchState = 'initial' | 'loading' | 'refreshing' | 'success' | 'error'
+
+/**
  * Parameters for configuring the `useFetching` hook.
  *
  * @template T - Type of the expected response data.
@@ -28,12 +34,12 @@ export type FetchingParams<T, D, E> = {
   /**
    * Callback on successful request completion.
    */
-  onComplete?: (response: AxiosResponse<T, D>) => void
+  onComplete?: (response: AxiosResponse<T, D> | null) => void
 
   /**
    * Callback on request failure.
    */
-  onError?: (error: AxiosError<E>) => void
+  onError?: (error: AxiosError<E> | null) => void
 
   /**
    * Whether the request starts in a loading state.
@@ -46,6 +52,18 @@ export type FetchingParams<T, D, E> = {
    * @default false
    */
   initialRefreshing?: boolean
+
+  /**
+   * Number of times to retry the request on failure.
+   * @default 1
+   */
+  retryCount?: number
+
+  /**
+   * Delay in milliseconds between retry attempts.
+   * @default 1000
+   */
+  retryDelay?: number
 }
 
 /**
@@ -102,4 +120,17 @@ export type FetchingReturn<T, D, E> = {
    * reset();
    */
   reset: () => void
+
+  /**
+   * General state of the request lifecycle.
+   *
+   * This combines all stages into a single value:
+   * - `'initial'`: Before any request is made
+   * - `'loading'`: The initial fetch is in progress
+   * - `'refreshing'`: A re-fetch is in progress
+   * - `'success'`: The request completed successfully
+   * - `'error'`: The request failed
+   *
+   */
+  fetchState: FetchState
 }
