@@ -1,10 +1,9 @@
 {
   "name": "axios-handler",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "This hook works with the axios library, making queries much easier and more convenient.",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write ."
   },
   "author": "Yeldos Turapbayev",
@@ -29,7 +28,10 @@
     "react": ">=18.0.0"
   },
   "devDependencies": {
+    "@types/react": "^19.1.8",
+    "axios": "^1.11.0",
     "prettier": "^3.4.2",
+    "react": "^19.1.0",
     "typescript": "^5.7.2"
   }
 }

@@ -7,13 +7,29 @@
 Install using npm:
 
 ```bash
-npm install axios-handler axios
+npm install axios-handler
 ```
 
 Or using yarn:
 
 ```bash
-yarn add axios-handler axios
+yarn add axios-handler
+```
+
+### Peer dependency:
+
+### This library relies on axios for making HTTP requests. Make sure it is installed in your project:
+
+Install using npm:
+
+```bash
+npm install axios
+```
+
+Or using yarn:
+
+```bash
+yarn add axios
 ```
 
 ## Features
@@ -38,10 +54,10 @@ import { useFetching } from 'axios-handler'
 import axios from 'axios'
 
 const Component = () => {
-  const { fetch, refresh, data, loading, refreshing, error, reset } = useFetching({
+  const { fetch, refresh, data, loading, refreshing, error, reset, fetchState } = useFetching({
     query: async (props) => {
-      const { id, filters } = props
-      return await axios.get(`api/v2/example/${id}`, { params: filters })
+      const { id, params } = props
+      return await axios.get(`api/v2/example/${id}`, { params: params })
     },
     onComplete: (response) => {
       console.log('Response:', response)
@@ -49,20 +65,19 @@ const Component = () => {
     onError: (error) => {
       console.log('Error:', error)
     },
+    retryCount: 2,
+    retryDelay: 1500,
     initialLoading: true,
+    initialRefreshing: true,
   })
 
   useEffect(() => {
-    fetch({ id: 123, filters: { test: 'test' } })
+    fetch({ id: '1', params: { example: 'example' } })
   }, [])
 
   return (
     <>
-      {loading && <ActivityIndicator />}
-      {refreshing && <ActivityIndicator />}
-      {error && <Text>Error: {error.message}</Text>}
-      {data && <Text>Data: {JSON.stringify(data.data)}</Text>}
-      <Button title="Refresh" onPress={() => refresh({ id: 123, filters: { test: 'test' } })} />
+      <Button title="Refresh" onPress={() => refresh({ id: '2', params: { example: 'example' } })} />
       <Button title="Reset" onPress={reset} />
     </>
   )
@@ -79,13 +94,15 @@ export default Component
 
 The `useFetching` hook accepts a configuration object with the following parameters:
 
-| Parameter           | Type                                            | Description                                          | Required | Default |
-| ------------------- | ----------------------------------------------- | ---------------------------------------------------- | -------- | ------- |
-| `query`             | `(props?: any) => Promise<AxiosResponse<T, D>>` | Function to perform the HTTP request using Axios.    | Yes      | N/A     |
-| `onComplete`        | `(response: AxiosResponse<T, D>) => void`       | Callback on successful request completion. response. | No       | N/A     |
-| `onError`           | `(error: AxiosError<E>) => void`                | Callback on request failure. object.                 | No       | N/A     |
-| `initialLoading`    | `boolean`                                       | Whether the request starts in a loading state.       | No       | `false` |
-| `initialRefreshing` | `boolean`                                       | Whether the request starts in a refreshing state.    | No       | `false` |
+| Parameter           | Type                                              | Description                                          | Required | Default |
+| ------------------- | ------------------------------------------------- | ---------------------------------------------------- | -------- | ------- |
+| `query`             | `(props?: any) => Promise<AxiosResponse<T, D>>`   | Function to perform the HTTP request using Axios.    | Yes      | N/A     |
+| `onComplete`        | `(response: AxiosResponse<T, D> \| null) => void` | Callback on successful request completion. response. | No       | N/A     |
+| `onError`           | `(error: AxiosError<E> \| null) => void`          | Callback on request failure. object.                 | No       | N/A     |
+| `initialLoading`    | `boolean`                                         | Whether the request starts in a loading state.       | No       | `false` |
+| `initialRefreshing` | `boolean`                                         | Whether the request starts in a refreshing state.    | No       | `false` |
+| `retryCount`        | `number`                                          | Number of times to retry the request on failure.     | No       | `1`     |
+| `retryDelay`        | `number`                                          | Delay in milliseconds between retry attempts.        | No       | `1000`  |
 
 ---
 
@@ -93,47 +110,16 @@ The `useFetching` hook accepts a configuration object with the following paramet
 
 The `useFetching` hook returns an object with the following properties:
 
-| Property     | Type                             | Description                                              |
-| ------------ | -------------------------------- | -------------------------------------------------------- |
-| `fetch`      | `(props?: any) => Promise<void>` | Starts the HTTP request.                                 |
-| `refresh`    | `(props?: any) => Promise<void>` | Re-triggers the request in a refreshing state.           |
-| `data`       | `AxiosResponse<T, D> \| null`    | The response data or `null` if no request has been made. |
-| `loading`    | `boolean`                        | Whether the request is loading.                          |
-| `refreshing` | `boolean`                        | Whether the request is refreshing.                       |
-| `error`      | `AxiosError<E> \| null`          | The error object if the request fails.                   |
-| `reset`      | `() => void`                     | Resets the state to its initial values.                  |
-
----
-
-### Type Definitions
-
-Here are the type definitions used for the hook:
-
-#### Parameters
-
-```typescript
-export type FetchingParams<T, D, E> = {
-  query: (props?: any) => Promise<AxiosResponse<T, D>>
-  onComplete?: (response: AxiosResponse<T, D>) => void
-  onError?: (error: AxiosError<E>) => void
-  initialLoading?: boolean
-  initialRefreshing?: boolean
-}
-```
-
-#### Return Values
-
-```typescript
-export type FetchingReturn<T, D, E> = {
-  fetch: (props?: any) => Promise<void>
-  refresh: (props?: any) => Promise<void>
-  data: AxiosResponse<T, D> | null
-  loading: boolean
-  refreshing: boolean
-  error: AxiosError<E> | null
-  reset: () => void
-}
-```
+| Property     | Type                                                             | Description                                                                                  |
+| ------------ | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `fetch`      | `(props?: any) => Promise<void>`                                 | Starts the HTTP request.                                                                     |
+| `refresh`    | `(props?: any) => Promise<void>`                                 | Re-triggers the request in a refreshing state.                                               |
+| `data`       | `AxiosResponse<T, D> \| null`                                    | The response data or `null` if no request has been made.                                     |
+| `loading`    | `boolean`                                                        | Whether the request is loading.                                                              |
+| `refreshing` | `boolean`                                                        | Whether the request is refreshing.                                                           |
+| `error`      | `AxiosError<E> \| null`                                          | The error object if the request fails.                                                       |
+| `reset`      | `() => void`                                                     | Resets the state to its initial values.                                                      |
+| `fetchState` | `'initial' \| 'loading' \| 'refreshing' \| 'success' \| 'error'` | General lifecycle state combining `loading`, `refreshing`, success and error into one field. |
 
 ---
 
