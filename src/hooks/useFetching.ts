@@ -8,7 +8,7 @@ export const useFetching = <T = any, D = any, E = any>({
   onError,
   initialLoading = false,
   initialRefreshing = false,
-  retryCount = 1,
+  retryCount = 0,
   retryDelay = 1000,
 }: FetchingParams<T, D, E>): FetchingReturn<T, D, E> => {
   if (!query) throw new Error('query function is required!')
